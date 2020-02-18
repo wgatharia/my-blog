@@ -2,6 +2,7 @@
   "name": "my-blog",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000/",
   "repository": {
     "url": "git remote add origin https://github.com/wgatharia/my-blog.git",
     "type": "git"
@@ -13,7 +14,8 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.1"
+    "react-scripts": "3.3.1",
+    "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,12 +1,28 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import articleContent from './article-content';
 import ArticlesList from '../components/ArticlesList';
 import NotFoundPage from '../pages/NotFoundPage';
-
+import CommentList from '../components/CommentsList';
+import UpvotesSection from '../components/UpvotesSection';
 
 const ArticlePage  = ({ match }) => {
     const name = match.params.name;
     const article = articleContent.find(article => article.name === name);
+
+    //create object save and set state with defaults
+    const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await fetch(`/api/articles/${name}`);
+
+            const body = await result.json();
+            setArticleInfo(body);
+        };
+
+        fetchData();
+
+    }, [name]);
 
     const otherArticles = articleContent.filter(article => article.name !== name);
 
@@ -14,10 +30,12 @@ const ArticlePage  = ({ match }) => {
 
     return (
         <>
-        <h1>This is the {article.title} article.</h1>
+        <h1>{article.title}</h1>
         {article.content.map((paragraph, key) => (
             <p key={key}>{paragraph}</p>
         ))}
+        <UpvotesSection articleName={name} upvotes={articleInfo.upvotes} setArticleInfo={setArticleInfo} />
+        <CommentList comments={articleInfo.comments} />
         <h3>Other Articles:</h3>
         <ArticlesList articles={otherArticles} />
         </>
