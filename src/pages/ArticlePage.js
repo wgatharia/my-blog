@@ -4,6 +4,8 @@ import ArticlesList from '../components/ArticlesList';
 import NotFoundPage from '../pages/NotFoundPage';
 import CommentList from '../components/CommentsList';
 import UpvotesSection from '../components/UpvotesSection';
+import AddCommentForm from '../components/AddCommentForm';
+
 
 const ArticlePage  = ({ match }) => {
     const name = match.params.name;
@@ -31,11 +33,12 @@ const ArticlePage  = ({ match }) => {
     return (
         <>
         <h1>{article.title}</h1>
+        <UpvotesSection articleName={name} upvotes={articleInfo.upvotes} setArticleInfo={setArticleInfo} />
         {article.content.map((paragraph, key) => (
             <p key={key}>{paragraph}</p>
         ))}
-        <UpvotesSection articleName={name} upvotes={articleInfo.upvotes} setArticleInfo={setArticleInfo} />
         <CommentList comments={articleInfo.comments} />
+        <AddCommentForm articleName={name} setArticleInfo={setArticleInfo} />
         <h3>Other Articles:</h3>
         <ArticlesList articles={otherArticles} />
         </>
